@@ -352,7 +352,7 @@ class Session {
 
         $this->clearAllInventories();
         $this->setTrackingSession(null);
-        $this->setScoreboard(new LobbyScoreboard());
+        // $this->setScoreboard(new LobbyScoreboard());
         $this->showBossBar("{DARK_GREEN}You are playing on {AQUA}" . strtoupper(ConfigGetter::getIP()));
     }
 
