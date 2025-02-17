@@ -217,13 +217,18 @@ class Game {
     }
 
     private function updatePlayEntities(): void {
-        foreach(Server::getInstance()->getWorldManager()->getDefaultWorld()->getEntities() as $entity) {
-            if($entity instanceof PlayBedwarsEntity and $entity->getPlayersPerTeam() === $this->map->getPlayersPerTeam()) {
-                $entity->updateNameTag();
-            }
+    $lobbyWorld = Server::getInstance()->getWorldManager()->getWorldByName("LbBedwars");
+    if ($lobbyWorld === null) {
+        return; // Pastikan world "Lobby" ada sebelum mengaksesnya
+    }
+    
+    foreach ($lobbyWorld->getEntities() as $entity) {
+        if ($entity instanceof PlayBedwarsEntity and $entity->getPlayersPerTeam() === $this->map->getPlayersPerTeam()) {
+            $entity->updateNameTag();
         }
     }
-
+}
+    
     private function spawnVillager(Villager $villager): void {
         $position = $villager->getPosition()->floor();
         $this->world->requestChunkPopulation($position->getX() >> Chunk::COORD_BIT_SIZE, $position->getZ() >> Chunk::COORD_BIT_SIZE, null)->onCompletion(
