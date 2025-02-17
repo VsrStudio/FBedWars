@@ -217,13 +217,8 @@ class Game {
     }
 
     private function updatePlayEntities(): void {
-    $lobbyWorld = Server::getInstance()->getWorldManager()->getWorldByName("LbBedwars");
-    if ($lobbyWorld === null) {
-        return; // Pastikan world "Lobby" ada sebelum mengaksesnya
-    }
-    
-    foreach ($lobbyWorld->getEntities() as $entity) {
-        if ($entity instanceof PlayBedwarsEntity and $entity->getPlayersPerTeam() === $this->map->getPlayersPerTeam()) {
+    foreach(Server::getInstance()->getWorldManager()->getDefaultWorld()->getEntities() as $entity) {
+        if($entity instanceof PlayBedwarsEntity and $entity->getPlayersPerTeam() === $this->map->getPlayersPerTeam()) {
             $entity->updateNameTag();
         }
     }
