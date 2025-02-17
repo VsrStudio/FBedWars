@@ -46,7 +46,7 @@ class PlayBedwarsEntity extends Human {
         $amount = $this->getSessionsCount();
         $this->setNameTag(ColorUtils::translate(
             "{YELLOW}{BOLD}CLICK TO PLAY{RESET}\n" .
-            "{AQUA}" . GameUtils::getMode($this->players_per_team) . " {GRAY}[v" . ConfigGetter::getVersion() . "]\n" .
+            "{AQUA}Bedwars" . GameUtils::getMode($this->players_per_team) . " {GRAY}[v" . ConfigGetter::getVersion() . "]\n" .
             "{YELLOW}{BOLD}" . $amount . " " . ($amount === 1 ? "Player" : "Players")
         ));
     }
