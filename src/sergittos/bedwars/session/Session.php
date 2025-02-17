@@ -344,16 +344,22 @@ class Session {
     }
 
     public function teleportToHub(): void {
-        $this->player->getEffects()->clear();
-        $this->player->setGamemode(GameMode::ADVENTURE());
-        $this->player->setHealth($this->player->getMaxHealth());
-        $this->player->setNameTag($this->player->getDisplayName());
-        $this->player->teleport(Server::getInstance()->getWorldManager()->getDefaultWorld()->getSafeSpawn());
+    $this->player->getEffects()->clear();
+    $this->player->setGamemode(GameMode::ADVENTURE());
+    $this->player->setHealth($this->player->getMaxHealth());
+    $this->player->setNameTag($this->player->getDisplayName());
 
-        $this->clearAllInventories();
-        $this->setTrackingSession(null);
-        // $this->setScoreboard(new LobbyScoreboard());
-        $this->showBossBar("{DARK_GREEN}You are playing on {AQUA}" . strtoupper(ConfigGetter::getIP()));
+    $world = Server::getInstance()->getWorldManager()->getWorldByName("LbBedwars");
+    if ($world !== null) {
+        $this->player->teleport($world->getSafeSpawn());
+        $this->setScoreboard(new LobbyScoreboard()); // Hanya tampil jika berada di Lobby
+    } else {
+        $this->player->sendMessage("§cWorld Lobby tidak ditemukan!");
+    }
+
+    $this->clearAllInventories();
+    $this->setTrackingSession(null);
+    $this->showBossBar("{DARK_GREEN}You are playing on {AQUA}" . strtoupper(ConfigGetter::getIP()));
     }
 
     public function kill(int $cause): void {
